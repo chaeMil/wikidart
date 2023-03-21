@@ -12,7 +12,7 @@ enum SearchType {
 
 /// Allows you to search and query wikipedia pages.
 class Wikidart {
-  static const String _baseUrl = 'en.wikipedia.org';
+  static const String _baseUrl = 'wikipedia.org';
 
   /// Retrieve a random Wikipedia page
   static Future<WikiResponse?> random() async {
@@ -30,11 +30,12 @@ class Wikidart {
     int thumbnailWidth = 50,
     int thumbnailLimit = 1,
     Map<String, dynamic>? params,
+    String language = 'en',
   }) async {
     var res = await http.get(
       Uri(
         scheme: 'https',
-        host: _baseUrl,
+        host: '$language.$_baseUrl',
         path: '/w/api.php',
         queryParameters: {
           'action': 'query',
@@ -69,11 +70,12 @@ class Wikidart {
     int offset = 0,
     SearchType searchType = SearchType.text,
     Map<String, dynamic>? params,
+    String language = 'en',
   }) async {
     if (query.isEmpty) throw ArgumentError.notNull();
     var res = await http.get(Uri(
       scheme: 'https',
-      host: _baseUrl,
+      host: '$language.$_baseUrl',
       path: '/w/api.php',
       queryParameters: {
         'action': 'query',
